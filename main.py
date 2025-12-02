@@ -33,7 +33,7 @@ async def get_user_list():
 @app.post("/users")
 async def post_users(request: Request):
     mydb = DataBaseConnection(host="localhost", user="root", password="123123123", database="ENTREGA1")
-    mydb_conn = mydb.get_connection() #no me deja utilizar lso await
+    mydb_conn = mydb.get_connection() 
     request = await request.json()
     username = request['username']
     age = request['age']
@@ -63,10 +63,10 @@ async def put_users(user_id: int, request: Request):
     
 @app.delete("/users/{user_id}")
 async def delete_users(user_id: int, request: Request):
-    #Connexion to dataBase
+
     mydb = DataBaseConnection(host="localhost", user="root", password="123123123", database="ENTREGA1")
     mydb_conn = mydb.get_connection()
-    #cursor
+    
     mycursor = mydb_conn.cursor()
     mycursor.execute(f"DELETE FROM users WHERE id=%s", (user_id,))
     mydb_conn.commit()
