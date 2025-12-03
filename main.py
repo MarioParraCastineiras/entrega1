@@ -106,6 +106,8 @@ async def artistinfo(id: str):
     artist_data=get_Artists(SPOTIFY_TOKEN_GLOBAL, id)
     if "error" in artist_data:
         raise HTTPException(status_code=404, detail="Artist Not found")
+    if "token_error" in artist_data:
+        raise HTTPException(status_code=401, detail="Invalid token. Please try again with a new token")
     return JSONResponse(content=artist_data, status_code=200)
     print(artist_data)
 
@@ -116,5 +118,7 @@ async def newreleases():
 
     if "error" in releases_data:
         raise HTTPException(status_code=404, detail="Unable to load latest data, try again later")
+    if "token_error" in releases_data:
+        raise HTTPException(status_code=401, detail="Invalid token. Please try again with a new token")
     return JSONResponse(content=releases_data, status_code=200)
     print(releases_data)

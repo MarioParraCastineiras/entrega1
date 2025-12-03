@@ -29,6 +29,10 @@ def get_Artists(token: str, id: str):
     }
     response=requests.get(url, headers=headers)
     print(response)
+
+    if response.status_code == 401:
+        return{"token_error": "Valid user authentication required. Please try again with a new token"}
+
     if response.status_code != 200:
         return {"error":"Artist not found"}
     artist_data = response.json()
@@ -42,10 +46,11 @@ def get_NewReleases(token:str):
     response=requests.get(url, headers=headers)
     print(response)
 
+    if response.status_code == 401:
+        return{"token_error": "Valid user authentication required. Please try again with a new token"}
     if response.status_code != 200:
         return {"error":"Something went wrong, please try again"}
-    if response.status_code == 401:
-        return{"error": "Valid user authentication required"}
+   
     
     newReleases_data = response.json()
     return newReleases_data
